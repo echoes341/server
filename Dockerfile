@@ -2,7 +2,7 @@ FROM golang:alpine
 
 RUN apk add --no-cache git ca-certificates
 ENV CGO_ENABLED=0
-WORKDIR /opt/documentistorici
+WORKDIR /opt/httpserver
 
 EXPOSE 8080
 

@@ -9,10 +9,15 @@ import (
 
 func main() {
 	address := flag.String("p", ":8080", "Address where server will listen to.")
+	assets := flag.String("assets-dir", "./assets", "Static content directory.")
+	flag.Parse()
+
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+
+	r.Get("/", http.FileServer(http.Dir(*assets)).ServeHTTP)
+	r.Get("/health-check", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("OK."))
 	})
 	
